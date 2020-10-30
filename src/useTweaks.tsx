@@ -35,3 +35,18 @@ export function useTweaks(
 
   return valuesFromState || getInitialValues(_schema);
 }
+
+export function useTweaksInDev(
+  nameOrSchema: string | Schema,
+  schema?: Schema | Settings | undefined,
+  settings?: Schema | undefined
+) {
+  const _schema = typeof nameOrSchema === "string" ? schema : nameOrSchema;
+
+  if (process.env.NODE_ENV !== "development") {
+    return getInitialValues(_schema);
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return useTweaks(nameOrSchema, schema, settings);
+}
